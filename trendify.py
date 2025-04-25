@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
@@ -17,10 +17,9 @@ def scrape_trendyol(query, max_results=60, scroll_times=3):
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
 
-    # Bu kısmı kaldırdık, çünkü WebDriverManager otomatik olarak doğru ChromeDriver'ı yükler
-    # options.binary_location = "/path/to/your/chrome"  # Bu satır çıkarıldı
+    # Burada chrome yerine chromium yolu kullanıyoruz
+    options.binary_location = "/usr/bin/chromium"  # Render'da genellikle bu yol doğru olacaktır.
 
-    # ChromeDriver'ı otomatik olarak indirip yükleyelim
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
 
@@ -33,7 +32,6 @@ def scrape_trendyol(query, max_results=60, scroll_times=3):
 
     results = []
 
-    # Ürünleri çekmek için 3 defa kaydırma yapalım
     for _ in range(scroll_times):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         time.sleep(3)  # Sayfanın yüklenmesi için bekleme
