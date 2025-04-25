@@ -18,9 +18,9 @@ Bu proje, **Trendyol**'dan ürün verilerini çekmek için geliştirilmiş bir P
 
 ## Kullanım
 
-1. `main.py` dosyasını çalıştırarak uygulamayı başlatın.
+1. `app.py` dosyasını çalıştırarak uygulamayı başlatın.
    ```bash
-   python main.py
+   python app.py
    ```
 
 2. Uygulama çalışmaya başladığında, girilen ürün ismine göre Trendyol'dan sonuçları listeleyecektir.
