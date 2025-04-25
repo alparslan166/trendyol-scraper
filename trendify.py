@@ -17,9 +17,10 @@ def scrape_trendyol(query, max_results=60, scroll_times=3):
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
 
-    # Burada chrome yerine chromium yolu kullanıyoruz
-    options.binary_location = "/usr/bin/chromium"  # Render'da genellikle bu yol doğru olacaktır.
+    # Render ortamındaki yolun doğru olup olmadığını kontrol edin
+    options.binary_location = "/usr/bin/chromium-browser"  # veya /usr/bin/chromium
 
+    # ChromeDriver'ı doğru şekilde indirin
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
 
