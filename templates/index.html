@@ -14,19 +14,85 @@
         </form>
 
         {% if results %}
-            <div class="results">
-                {% for item in results %}
-                    <div class="card">
-                        <img src="{{ item.image }}" alt="Görsel">
-                        <h3>{{ item.title }}</h3>
-                        <p class="price">{{ item.price }}</p>
-                        <a href="{{ item.link }}" target="_blank">Ürünü Gör</a>
+            {% if results|length > 0 %}
+                <div class="carousel-container">
+                    <button class="prev">&lt;</button>
+                    <div class="carousel">
+                        <div class="results">
+                            {% for item in results %}
+                                <div class="card">
+                                    <img src="{{ item.image }}" alt="Görsel">
+                                    <h3>{{ item.title }}</h3>
+                                    <p class="price">{{ item.price }}</p>
+                                    <a href="{{ item.link }}" target="_blank">Ürünü Gör</a>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                {% endfor %}
-            </div>
+                    <button class="next">&gt;</button>
+                </div>
+            {% else %}
+                {% if query %}
+                    <p>Hiç ürün bulunamadı.</p>
+                {% endif %}
+            {% endif %}
         {% elif query %}
-            <p>Hiç ürün bulunamadı.</p>
+            <p>Arama yapınız.</p>
         {% endif %}
     </div>
+
+    <script>
+        let currentIndex = 0;
+        let cardWidth;
+        const gap = 20;
+        const resultsContainer = document.querySelector('.results');
+        const totalItems = document.querySelectorAll('.card').length;
+
+        function calculateDimensions() {
+            const firstCard = document.querySelector('.card');
+            if(firstCard) cardWidth = firstCard.offsetWidth;
+        }
+
+        function updateCarousel() {
+            calculateDimensions();
+            const slideWidth = (cardWidth + gap) * 4;
+            resultsContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+        }
+
+        document.querySelector('.next').addEventListener('click', () => {
+            const maxSlides = Math.ceil(totalItems / 4) - 1;
+            if(currentIndex < maxSlides) {
+                currentIndex++;
+                updateCarousel();
+                updateButtonVisibility();
+            }
+        });
+
+        document.querySelector('.prev').addEventListener('click', () => {
+            if(currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+                updateButtonVisibility();
+            }
+        });
+
+        function updateButtonVisibility() {
+            const maxSlides = Math.ceil(totalItems / 4) - 1;
+            document.querySelector('.prev').style.display = currentIndex > 0 ? 'block' : 'none';
+            document.querySelector('.next').style.display = currentIndex < maxSlides ? 'block' : 'none';
+        }
+
+        window.addEventListener('resize', () => {
+            calculateDimensions();
+            updateCarousel();
+            updateButtonVisibility();
+        });
+
+        window.onload = () => {
+            calculateDimensions();
+            updateButtonVisibility();
+            updateCarousel();
+        };
+    </script>
 </body>
 </html>
