@@ -1,32 +1,28 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
-import pandas as pd
 import time
-import os
 
 def scrape_trendyol(query, max_results=20):
     query = query.replace(" ", "+")
     url = f"https://www.trendyol.com/sr?q={query}"
 
     options = Options()
-    options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
-    options.add_argument("--headless")
+    options.add_argument("--headless")  # Tarayıcıyı başsız çalıştırmak için
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
 
-    # ChromeDriver'ın sistemdeki yolu
-    chrome_driver_path = ChromeDriverManager().install()
+    # Tarayıcı yolu ve web driver
+    options.binary_location = "/usr/bin/google-chrome-stable"  # Google Chrome için
+    # Eğer Chromium kullanıyorsanız:
+    # options.binary_location = "/usr/bin/chromium-browser"  # Chromium için
 
-    # Eğer Render'da çalışıyorsa, ChromeDriver'ı doğru yolda bulacak şekilde ayar yapın
-    if "RENDER" in os.environ:
-        options.binary_location = "/usr/bin/google-chrome-stable"  # Render için Google Chrome binary yolu
-
-    driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
+    # ChromeDriver'ı otomatik yüklemek için webdriver_manager'ı kullanıyoruz
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
 
     # Sayfanın tamamen yüklenmesini bekle
@@ -49,10 +45,7 @@ def scrape_trendyol(query, max_results=20):
         try:
             # Ürün başlığını almak için XPath kullan
             name = item.find_element(By.XPATH, ".//div[contains(@class, 'prdct-desc')]").text
-            
-            # Fiyatı almak için alternatif bir XPath kullan
-            price = item.find_element(By.XPATH, ".//div[contains(@class, 'price')]").text  # Alternatif fiyat seçici
-            
+            price = item.find_element(By.XPATH, ".//div[contains(@class, 'price')]").text
             link = item.find_element(By.TAG_NAME, "a").get_attribute("href")
             image = item.find_element(By.TAG_NAME, "img").get_attribute("src")
 
@@ -62,13 +55,14 @@ def scrape_trendyol(query, max_results=20):
                 "link": link,
                 "image": image
             })
-            
         except Exception as e:
             print(f"Bir hata oluştu: {e}")
             continue
 
     driver.quit()
     return results
+
+
 
 def save_to_excel(data, filename="output.xlsx"):
     if data:
