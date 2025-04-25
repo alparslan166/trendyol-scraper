@@ -16,6 +16,9 @@ def scrape_trendyol(query, max_results=60, scroll_times=3):
     options.add_argument("--headless")
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
+    
+    # Eğer Chrome'un yolu belirtilmemişse, bunu buraya ekleyin:
+    options.binary_location = "/path/to/your/chrome"  # Chrome'un yüklü olduğu yolu buraya yazın.
 
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
@@ -28,7 +31,7 @@ def scrape_trendyol(query, max_results=60, scroll_times=3):
         return []
 
     results = []
-    
+
     # Ürünleri çekmek için 3 defa kaydırma yapalım
     for _ in range(scroll_times):
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
