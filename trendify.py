@@ -16,10 +16,11 @@ def scrape_trendyol(query, max_results=60, scroll_times=3):
     options.add_argument("--headless")
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
-    
-    # Eğer Chrome'un yolu belirtilmemişse, bunu buraya ekleyin:
-    options.binary_location = "/path/to/your/chrome"  # Chrome'un yüklü olduğu yolu buraya yazın.
 
+    # Bu kısmı kaldırdık, çünkü WebDriverManager otomatik olarak doğru ChromeDriver'ı yükler
+    # options.binary_location = "/path/to/your/chrome"  # Bu satır çıkarıldı
+
+    # ChromeDriver'ı otomatik olarak indirip yükleyelim
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get(url)
 
