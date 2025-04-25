@@ -4,14 +4,41 @@
     <meta charset="UTF-8">
     <title>Trendify</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .loading {
+            display: none;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 10px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Trendify 🔍</h1>
-        <form method="POST">
+        <form method="POST" id="searchForm">
             <input type="text" name="query" placeholder="Ürün ara..." value="{{ query }}">
             <button type="submit">Ara</button>
         </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Ürünler aranıyor, lütfen bekleyiniz...</p>
+        </div>
 
         {% if results %}
             {% if results|length > 0 %}
@@ -42,6 +69,17 @@
     </div>
 
     <script>
+        // Yüklenme göstergesi yönetimi
+        const searchForm = document.getElementById('searchForm');
+        const loading = document.getElementById('loading');
+        
+        searchForm.addEventListener('submit', () => {
+            loading.style.display = 'block';
+            const carousel = document.querySelector('.carousel-container');
+            if(carousel) carousel.style.display = 'none';
+        });
+
+        // Carousel fonksiyonları
         let currentIndex = 0;
         let cardWidth;
         const gap = 20;
@@ -56,10 +94,12 @@
         function updateCarousel() {
             calculateDimensions();
             const slideWidth = (cardWidth + gap) * 4;
-            resultsContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            if(resultsContainer) {
+                resultsContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            }
         }
 
-        document.querySelector('.next').addEventListener('click', () => {
+        document.querySelector('.next')?.addEventListener('click', () => {
             const maxSlides = Math.ceil(totalItems / 4) - 1;
             if(currentIndex < maxSlides) {
                 currentIndex++;
@@ -68,7 +108,7 @@
             }
         });
 
-        document.querySelector('.prev').addEventListener('click', () => {
+        document.querySelector('.prev')?.addEventListener('click', () => {
             if(currentIndex > 0) {
                 currentIndex--;
                 updateCarousel();
@@ -78,8 +118,11 @@
 
         function updateButtonVisibility() {
             const maxSlides = Math.ceil(totalItems / 4) - 1;
-            document.querySelector('.prev').style.display = currentIndex > 0 ? 'block' : 'none';
-            document.querySelector('.next').style.display = currentIndex < maxSlides ? 'block' : 'none';
+            const prevBtn = document.querySelector('.prev');
+            const nextBtn = document.querySelector('.next');
+            
+            if(prevBtn) prevBtn.style.display = currentIndex > 0 ? 'block' : 'none';
+            if(nextBtn) nextBtn.style.display = currentIndex < maxSlides ? 'block' : 'none';
         }
 
         window.addEventListener('resize', () => {
@@ -92,6 +135,7 @@
             calculateDimensions();
             updateButtonVisibility();
             updateCarousel();
+            loading.style.display = 'none';
         };
     </script>
 </body>
