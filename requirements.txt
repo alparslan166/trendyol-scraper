@@ -2,4 +2,8 @@ flask
 requests
 beautifulsoup4
 selenium
+<<<<<<< HEAD
 webdriver-manager
+=======
+webdriver-manager
+>>>>>>> 66f5d492765f6dd0f4792191c1c2b3f9bf5f0287
