@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Trendify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Trendify 🔍</h1>
+        <form method="POST">
+            <input type="text" name="query" placeholder="Ürün ara..." value="{{ query }}">
+            <button type="submit">Ara</button>
+        </form>
+
+        {% if results %}
+            <div class="results">
+                {% for item in results %}
+                    <div class="card">
+                        <img src="{{ item.image }}" alt="Görsel">
+                        <h3>{{ item.title }}</h3>
+                        <p class="price">{{ item.price }}</p>
+                        <a href="{{ item.link }}" target="_blank">Ürünü Gör</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% elif query %}
+            <p>Hiç ürün bulunamadı.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

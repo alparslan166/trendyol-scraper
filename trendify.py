@@ -47,11 +47,16 @@ def scrape_trendyol(query, max_results=20):
             
             link = item.find_element(By.TAG_NAME, "a").get_attribute("href")
 
+            image = item.find_element(By.TAG_NAME, "img").get_attribute("src")
+
+
             results.append({
-                "Ürün Adı": name,
-                "Fiyat": price,
-                "Link": link
+                "title": name,
+                "price": price,
+                "link": link,
+                "image": image
             })
+            
         except Exception as e:
             print(f"Bir hata oluştu: {e}")
             continue
