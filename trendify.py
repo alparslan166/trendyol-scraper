@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import time
+import os
 
 def scrape_trendyol(query, max_results=20):
     query = query.replace(" ", "+")
@@ -18,7 +19,14 @@ def scrape_trendyol(query, max_results=20):
     options.add_argument("--disable-gpu")
     options.add_argument("--no-sandbox")
 
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    # ChromeDriver'ın sistemdeki yolu
+    chrome_driver_path = ChromeDriverManager().install()
+
+    # Eğer Render'da çalışıyorsa, ChromeDriver'ı doğru yolda bulacak şekilde ayar yapın
+    if "RENDER" in os.environ:
+        options.binary_location = "/usr/bin/google-chrome-stable"  # Render için Google Chrome binary yolu
+
+    driver = webdriver.Chrome(service=Service(chrome_driver_path), options=options)
     driver.get(url)
 
     # Sayfanın tamamen yüklenmesini bekle
@@ -46,9 +54,7 @@ def scrape_trendyol(query, max_results=20):
             price = item.find_element(By.XPATH, ".//div[contains(@class, 'price')]").text  # Alternatif fiyat seçici
             
             link = item.find_element(By.TAG_NAME, "a").get_attribute("href")
-
             image = item.find_element(By.TAG_NAME, "img").get_attribute("src")
-
 
             results.append({
                 "title": name,
