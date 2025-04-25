@@ -24,6 +24,7 @@ Bu proje, **Trendyol**'dan ürün verilerini çekmek için geliştirilmiş bir P
    ```
 
 2. Uygulama çalışmaya başladığında, girilen ürün ismine göre Trendyol'dan sonuçları listeleyecektir.
+![İlk Ekran](https://github.com/alparslan166/trendyol-scraper/blob/main/images/ilkEkran.png)
 
 ## Özellikler
 - **Arama**: Kullanıcılar ürün adı girerek Trendyol'daki ilgili ürünleri listeleyebilir.
