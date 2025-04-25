@@ -28,9 +28,13 @@ Bu proje, **Trendyol**'dan ürün verilerini çekmek için geliştirilmiş bir P
 
 ## Özellikler
 - **Arama**: Kullanıcılar ürün adı girerek Trendyol'daki ilgili ürünleri listeleyebilir.
-- **Filtreleme**: (Opsiyonel olarak eklenebilir) Fiyat, renk veya diğer filtrelerle ürünleri sıralama imkanı.
 
 ![program](https://github.com/alparslan166/trendyol-scraper/blob/main/images/program.png)
+
+
+- **Filtreleme**: (Opsiyonel olarak eklenebilir) Fiyat, renk veya diğer filtrelerle ürünleri sıralama imkanı.
+
+
 ![ürünler](https://github.com/alparslan166/trendyol-scraper/blob/main/images/ürünler.png)
 
 ## Katkıda Bulunma
