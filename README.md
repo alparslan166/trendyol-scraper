@@ -1,50 +1,51 @@
 # Trendyol Scraper
 
-Bu proje, **Trendyol**'dan ürün verilerini çekmek için geliştirilmiş bir Python uygulamasıdır. Kullanıcılar belirli bir ürün ismi girerek, Trendyol üzerindeki ilgili ürünleri listeleyebilirler.
+This project is a Python application developed to extract product data from **Trendyol**. Users can search for products by entering a product name and get a list of related products from Trendyol.
 
-## Teknolojiler
+## Technologies
+
 - Python 3.x
 - Selenium
 - WebDriver Manager
 
-## Kurulum
+## Installation
 
-1. Gerekli kütüphaneleri yükleyin:
+1. Install the required libraries:
    ```bash
    pip install -r requirements.txt
    ```
 
-2. WebDriver'ı otomatik olarak yönetmek için `webdriver-manager` kullanıyoruz. WebDriver'ınızın doğru sürümde olduğundan emin olun.
+2. We use `webdriver-manager` to automatically manage WebDriver. Make sure your WebDriver is in the correct version.
 
-## Kullanım
+## Usage
 
-1. `app.py` dosyasını çalıştırarak uygulamayı başlatın.
+1. Start the application by running `app.py`:
    ```bash
    python app.py
    ```
 
-2. Uygulama çalışmaya başladığında, girilen ürün ismine göre Trendyol'dan sonuçları listeleyecektir.
-![İlk Ekran](https://github.com/alparslan166/trendyol-scraper/blob/main/images/ilkEkran.jpeg)
+2. Once the application starts, it will list results from Trendyol based on the entered product name.
 
-## Özellikler
-- **Arama**: Kullanıcılar ürün adı girerek Trendyol'daki ilgili ürünleri listeleyebilir.
+![Initial Screen](https://github.com/alparslan166/trendyol-scraper/blob/main/images/ilkEkran.jpeg)
 
-![program](https://github.com/alparslan166/trendyol-scraper/blob/main/images/program.jpeg)
+## Features
 
+- **Search**: Users can list related products on Trendyol by entering a product name.
 
-- **Filtreleme**: (Opsiyonel olarak eklenebilir) Fiyat, renk veya diğer filtrelerle ürünleri sıralama imkanı.
+![Program](https://github.com/alparslan166/trendyol-scraper/blob/main/images/program.jpeg)
 
+- **Filtering**: (Optionally can be added) Ability to sort products by price, color, or other filters.
 
-![ürünler](https://github.com/alparslan166/trendyol-scraper/blob/main/images/ürünler.jpeg)
+![Products](https://github.com/alparslan166/trendyol-scraper/blob/main/images/ürünler.jpeg)
 
-## Katkıda Bulunma
+## Contributing
 
-1. Fork yapın
-2. Yeni bir özellik için branch oluşturun (`git checkout -b feature/your-feature`)
-3. Yaptığınız değişiklikleri commit edin (`git commit -am 'Add new feature'`)
-4. Değişiklikleri push edin (`git push origin feature/your-feature`)
-5. Pull request açın
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
 
-## Lisans
+## License
 
-Bu projede **MIT Lisansı** kullanılmıştır. Daha fazla bilgi için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
+This project uses the **MIT License**. For more information, see the [LICENSE](LICENSE) file.
